@@ -1,0 +1,15 @@
+--needs to have SET STATISTICS PROFILE ON set on the index build
+
+SELECT   session_id,
+       node_id,
+       physical_operator_name, 
+       SUM(row_count) row_count, 
+       SUM(estimate_row_count) AS estimate_row_count,
+       ROUND((CAST(SUM(row_count) AS FLOAT)/SUM(estimate_row_count)) * 100,2)  as estimate_percent_complete,
+	   AVG(actual_read_row_count) AS actual_read_row_count,
+	   AVG(estimated_read_row_count) AS estimated_read_row_count,
+	   ROUND((CAST(AVG(actual_read_row_count) AS FLOAT) /AVG(estimated_read_row_count)) * 100,2) AS actual_row_read_percent
+FROM sys.dm_exec_query_profiles   
+--WHERE session_id=@session_id  
+GROUP BY session_id, node_id,physical_operator_name  
+ORDER BY session_id, node_id desc;
