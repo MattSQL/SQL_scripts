@@ -1,0 +1,10 @@
+select 
+	db_name(database_id),
+	last_commit_lsn,
+	last_commit_time,
+	last_hardened_lsn,
+	last_hardened_time,
+	last_received_lsn,
+	last_received_time 
+from sys.dm_hadr_database_replica_states
+--where database_id = db_id('AKPOS')
