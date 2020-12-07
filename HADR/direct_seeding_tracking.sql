@@ -1,7 +1,3 @@
-select * from sys.dm_hadr_automatic_seeding
-order by start_time desc
---
---select * from sys.dm_hadr_physical_seeding_stats
 
 select 
 	local_database_name
